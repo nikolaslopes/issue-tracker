@@ -1,27 +1,16 @@
 export interface IssueProps {
-  assignee: string
-  comments: Array<string>
-  completedDate: any
-  createdBy: string
-  createdDate: string
-  dueDate: any
   id: string
-  labels: Array<string>
+  title: string
   number: number
   status: string
-  title: string
+  createdBy: string
+  assignee: string
+  createdDate: string
+  comments: Array<string>
+  labels: Array<string>
 }
 
-export interface IssueItemProps {
-  issue: Pick<
-    IssueProps,
-    | 'title'
-    | 'number'
-    | 'assignee'
-    | 'comments'
-    | 'createdBy'
-    | 'createdDate'
-    | 'labels'
-    | 'status'
-  >
+export type IssueItemFormatted = Omit<IssueProps, ''> & {
+  commentsCounter: number
+  formattedDate: string
 }

@@ -1,9 +1,11 @@
-import { IssueItemProps } from '../../../interfaces/global'
-import { relativeDate } from '../../../helpers/relativeDate'
+import { relativeDate } from '../../../../helpers/relativeDate'
 import { GoIssueOpened, GoIssueClosed, GoComment } from 'react-icons/go'
 import { Link } from 'react-router-dom'
+import { IssueItemProps } from './types'
 
 export function IssueItem({ issue }: IssueItemProps) {
+  console.log('data', issue)
+
   return (
     <li>
       <div>
@@ -23,17 +25,16 @@ export function IssueItem({ issue }: IssueItemProps) {
           ))}
         </span>
         <small>
-          #{issue.number} opened {relativeDate(issue.createdDate)} by{' '}
-          {issue.createdBy}
+          #{issue.number} opened {issue.formattedDate} by {issue.createdBy}
         </small>
       </div>
       {issue.assignee ? <div>{issue.assignee}</div> : null}
 
       <span className={'comment-count'}>
-        {issue.comments.length > 0 ? (
+        {issue.commentsCounter > 0 ? (
           <>
             <GoComment />
-            {issue.comments.length}
+            {issue.commentsCounter}
           </>
         ) : null}
       </span>
