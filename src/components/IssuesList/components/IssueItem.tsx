@@ -1,11 +1,8 @@
-import { relativeDate } from '../../../../helpers/relativeDate'
 import { GoIssueOpened, GoIssueClosed, GoComment } from 'react-icons/go'
 import { Link } from 'react-router-dom'
-import { IssueItemProps } from './types'
+import { IssueItemProps } from '../types'
 
 export function IssueItem({ issue }: IssueItemProps) {
-  console.log('data', issue)
-
   return (
     <li>
       <div>
