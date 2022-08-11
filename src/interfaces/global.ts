@@ -11,3 +11,17 @@ export interface IssueProps {
   status: string
   title: string
 }
+
+export interface IssueItemProps {
+  issue: Pick<
+    IssueProps,
+    | 'title'
+    | 'number'
+    | 'assignee'
+    | 'comments'
+    | 'createdBy'
+    | 'createdDate'
+    | 'labels'
+    | 'status'
+  >
+}
