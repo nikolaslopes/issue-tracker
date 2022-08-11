@@ -1,10 +1,16 @@
-import { Route, Routes, Link, useMatch } from "react-router-dom";
-import Issues from "./pages/Issues";
-import Issue from "./pages/Issue";
-import AddIssue from "./pages/AddIssue";
+import {
+  Link,
+  Route,
+  Routes as RoutesWrapper,
+  useMatch,
+} from 'react-router-dom'
+import AddIssue from '../pages/AddIssue'
+import Issue from '../pages/Issue'
+import Issues from '../pages/Issues'
 
-function App() {
-  const isRootPath = useMatch({ path: "/", end: true });
+export function Routes() {
+  const isRootPath = useMatch({ path: '/', end: true })
+
   return (
     <div className="App">
       {!isRootPath ? (
@@ -13,13 +19,12 @@ function App() {
         <span>&nbsp;</span>
       )}
       <h1>Issue Tracker</h1>
-      <Routes>
+
+      <RoutesWrapper>
         <Route path="/" element={<Issues />} />
         <Route path="/add" element={<AddIssue />} />
         <Route path="/issue/:number" element={<Issue />} />
-      </Routes>
+      </RoutesWrapper>
     </div>
-  );
+  )
 }
-
-export default App;
