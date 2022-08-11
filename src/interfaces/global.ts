@@ -11,7 +11,3 @@ export interface IssueProps {
   status: string
   title: string
 }
-
-export type IssuesProps = {
-  issues: IssueProps[]
-}

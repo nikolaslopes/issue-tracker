@@ -1,16 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { Link } from 'react-router-dom'
-import { IssueProps, IssuesProps } from '../../interfaces/global'
-
-export async function fetchIssuesList() {
-  const response = await fetch('/api/issues')
-  const data = await response.json()
-
-  return data as IssuesProps
-}
+import { IssueProps } from '../../interfaces/global'
+import { fetchIssuesList } from './services'
 
 export function IssuesList() {
-  const issuesQuery = useQuery<IssuesProps>(['issues'], () => fetchIssuesList())
+  const issuesQuery = useQuery<IssueProps[]>(['issues'], () =>
+    fetchIssuesList()
+  )
 
   console.log('data', issuesQuery.data)
   return (
@@ -20,7 +15,7 @@ export function IssuesList() {
         <p>Loading...</p>
       ) : (
         <>
-          {issuesQuery.data?.issues.map((issue) => (
+          {issuesQuery.data?.map((issue) => (
             <p>{issue.title}</p>
           ))}
         </>
