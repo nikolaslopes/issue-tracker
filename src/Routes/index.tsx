@@ -4,9 +4,9 @@ import {
   Routes as RoutesWrapper,
   useMatch,
 } from 'react-router-dom'
-import AddIssue from '../pages/AddIssue'
-import Issue from '../pages/Issue'
-import Issues from '../pages/Issues'
+import { AddIssue } from '../pages/AddIssue'
+import { Issue } from '../pages/Issue'
+import { Issues } from '../pages/Issues'
 
 export function Routes() {
   const isRootPath = useMatch({ path: '/', end: true })

@@ -1,6 +1,6 @@
-import IssuesList from "../components/IssuesList";
-import LabelList from "../components/LabelList";
-export default function Issues() {
+import { IssuesList } from '../../components/IssuesList'
+import { LabelList } from '../../components/LabelList'
+export function Issues() {
   return (
     <div>
       <main>
@@ -13,5 +13,5 @@ export default function Issues() {
         </aside>
       </main>
     </div>
-  );
+  )
 }
