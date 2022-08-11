@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
+import { App } from './components/App'
 import { BrowserRouter } from 'react-router-dom'
 import { worker } from '@uidotdev/react-query-api'
+import './index.css'
 
 new Promise((res) => setTimeout(res, 100))
   .then(() =>
@@ -15,11 +15,9 @@ new Promise((res) => setTimeout(res, 100))
   .then(() => {
     ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <React.StrictMode>
-        <BrowserRouter>
-          <div className="container">
-            <App />
-          </div>
-        </BrowserRouter>
+        <div className="container">
+          <App />
+        </div>
       </React.StrictMode>
     )
   })
