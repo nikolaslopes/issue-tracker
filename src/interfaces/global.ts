@@ -10,7 +10,7 @@ export interface IssueProps {
   labels: Array<string>
 }
 
-export type IssueItemFormatted = Omit<IssueProps, ''> & {
+export type IssueItemFormatted = IssueProps & {
   commentsCounter: number
   formattedDate: string
 }
