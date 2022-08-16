@@ -1,8 +1,14 @@
 import { GoIssueOpened, GoIssueClosed, GoComment } from 'react-icons/go'
 import { Link } from 'react-router-dom'
+import { useUserData } from '../../../helpers/useUserData'
 import { IssueItemProps } from '../types'
 
 export function IssueItem({ issue }: IssueItemProps) {
+  const assigneeUser = useUserData(issue.assignee)
+  const createdByUser = useUserData(issue.createdBy)
+
+  console.log(createdByUser)
+
   return (
     <li>
       <div>
@@ -22,7 +28,8 @@ export function IssueItem({ issue }: IssueItemProps) {
           ))}
         </span>
         <small>
-          #{issue.number} opened {issue.formattedDate} by {issue.createdBy}
+          #{issue.number} opened {issue.formattedDate}{' '}
+          {createdByUser.isSuccess ? `by ${createdByUser.data.name}` : ''}
         </small>
       </div>
       {issue.assignee ? <div>{issue.assignee}</div> : null}
