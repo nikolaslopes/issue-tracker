@@ -3,9 +3,7 @@ import { fetchIssuesList } from './services'
 import { IssueItem } from './components/IssueItem'
 
 export function IssuesList() {
-  const issuesQuery = useQuery(['issues'], () => fetchIssuesList())
-
-  console.log('data', issuesQuery.data)
+  const issuesQuery = useQuery(['issues'], fetchIssuesList)
 
   return (
     <div>
