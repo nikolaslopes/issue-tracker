@@ -7,8 +7,6 @@ export function IssueItem({ issue }: IssueItemProps) {
   const assigneeUser = useUserData(issue.assignee)
   const createdByUser = useUserData(issue.createdBy)
 
-  console.log(assigneeUser.data)
-
   return (
     <li>
       <div>

@@ -1,6 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { IssueItemProps } from '../components/IssuesList/types'
-import { IssueProps } from '../interfaces/global'
 
 export interface IUser {
   id: string
