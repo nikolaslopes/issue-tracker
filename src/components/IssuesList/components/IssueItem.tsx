@@ -21,7 +21,7 @@ export function IssueItem({ issue }: IssueItemProps) {
         <span>
           <Link to={`/issue/${issue.number}`}>{issue.title}</Link>
           {issue.labels.map((label) => (
-            <Label key={label} label={label} />
+            <Label key={label} labelId={label} />
           ))}
         </span>
         <small>

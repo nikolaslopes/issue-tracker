@@ -1,21 +1,21 @@
 import { useLabelsData } from '../../../helpers/useLabelsData'
 
 interface ILabel {
-  label: string
+  labelId: string
 }
 
-export const Label = ({ label }: ILabel) => {
+export const Label = ({ labelId }: ILabel) => {
   const labelsQuery = useLabelsData()
 
   if (labelsQuery.isLoading) {
     return null
   }
 
-  console.log(labelsQuery.data)
+  const labelObj = labelsQuery.data?.find((item) => item.id === labelId)
 
-  return (
-    <span key={label} className={`label red`}>
-      {label}
-    </span>
-  )
+  if (!labelObj) {
+    return null
+  }
+
+  return <span className={`label ${labelObj?.color}`}>{labelObj?.name}</span>
 }
