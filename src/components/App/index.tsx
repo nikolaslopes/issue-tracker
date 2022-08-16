@@ -3,6 +3,7 @@ import { Routes } from '../../Routes'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from './QueryClient'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 export function App() {
   return (
@@ -10,6 +11,7 @@ export function App() {
       <BrowserRouter>
         <Routes />
       </BrowserRouter>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   )
 }
