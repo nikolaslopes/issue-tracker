@@ -1,10 +1,18 @@
+import { useQuery } from '@tanstack/react-query'
+
 interface IUserData {
   userId: number
 }
 
-export async function useUserData({ userId }: IUserData) {
-  const response = await fetch(`/api/users/${userId}`)
-  const data = await response.json()
+export const useUserData = ({ userId }: IUserData) => {
+  async function fetchUser() {
+    const response = await fetch(`/api/users/${userId}`)
+    const data = await response.json()
 
-  return data
+    return data
+  }
+
+  const userQuery = useQuery(['user', userId], fetchUser)
+
+  return userQuery
 }
