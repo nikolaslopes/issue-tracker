@@ -7,7 +7,7 @@ export function IssueItem({ issue }: IssueItemProps) {
   const assigneeUser = useUserData(issue.assignee)
   const createdByUser = useUserData(issue.createdBy)
 
-  console.log(createdByUser)
+  console.log(assigneeUser.data)
 
   return (
     <li>
@@ -32,8 +32,19 @@ export function IssueItem({ issue }: IssueItemProps) {
           {createdByUser.isSuccess ? `by ${createdByUser.data.name}` : ''}
         </small>
       </div>
-      {issue.assignee ? <div>{issue.assignee}</div> : null}
-
+      {issue.assignee ? (
+        <img
+          className="assigned-to"
+          src={
+            assigneeUser.isSuccess ? assigneeUser.data?.profilePictureUrl : ''
+          }
+          alt={`Assigned to ${
+            assigneeUser.isSuccess
+              ? assigneeUser.data?.name
+              : 'user name not found'
+          }`}
+        />
+      ) : null}
       <span className={'comment-count'}>
         {issue.commentsCounter > 0 ? (
           <>
