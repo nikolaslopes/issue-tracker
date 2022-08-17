@@ -1,11 +1,15 @@
-import { useLabelsData } from '../../helpers/useLabelsData'
+import { ILabel, useLabelsData } from '../../helpers/useLabelsData'
 
-export function LabelList() {
+interface ILabelList {
+  selected: ILabel[]
+  toggle: (label: ILabel) => void
+}
+
+export function LabelList({ selected, toggle }: ILabelList) {
   const labelsQuery = useLabelsData()
 
-  console.log(labelsQuery.data)
   return (
-    <div>
+    <div className="labels">
       <h3>Labels</h3>
       {labelsQuery.isLoading ? (
         <p>Loading...</p>
@@ -13,7 +17,14 @@ export function LabelList() {
         <ul>
           {labelsQuery.data?.map((label) => (
             <li key={label.id}>
-              <button className={`${label.color}`}>{label.name}</button>
+              <button
+                onClick={() => toggle(label)}
+                className={`label ${
+                  selected.includes(label) ? 'selected' : ''
+                } ${label.color}`}
+              >
+                {label.name}
+              </button>
             </li>
           ))}
         </ul>
