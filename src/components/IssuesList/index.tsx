@@ -8,7 +8,7 @@ export type IIssuesList = Pick<ILabelList, 'selectedLabels'>
 export function IssuesList({ selectedLabels }: IIssuesList) {
   const labelsQueryString = selectedLabels
     .map((label) => {
-      return `labels[]=${label.id}`
+      return `labels[]=${label.name}`
     })
     .join('&')
 

@@ -9,7 +9,7 @@ export function Issues() {
   function toggleLabel(label: ILabel) {
     setLabels((prevState) =>
       prevState.includes(label)
-        ? prevState.filter((currentLabel) => currentLabel !== label)
+        ? prevState.filter((currentLabel) => currentLabel.id !== label.id)
         : prevState.concat(label)
     )
   }
