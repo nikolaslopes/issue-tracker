@@ -1,8 +1,16 @@
 import { relativeDate } from '../../helpers/relativeDate'
 import { IssueProps, IssueItemFormatted } from '../../interfaces/global'
 
-export async function fetchIssuesList(labelsParam: string) {
-  const response = await fetch(`/api/issues?${labelsParam}`)
+interface FetchIssuesListProps {
+  labelsParam: string
+  statusParam: string
+}
+
+export async function fetchIssuesList({
+  labelsParam,
+  statusParam,
+}: FetchIssuesListProps) {
+  const response = await fetch(`/api/issues?${labelsParam}${statusParam}`)
   const data: IssueProps[] = await response.json()
 
   const issueList: IssueItemFormatted[] = data.map((item) => {
