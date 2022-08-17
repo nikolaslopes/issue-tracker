@@ -2,6 +2,7 @@ import { GoIssueOpened, GoIssueClosed, GoComment } from 'react-icons/go'
 import { Link } from 'react-router-dom'
 import { useUserData } from '../../../helpers/useUserData'
 import { IssueItemProps } from '../types'
+import { Label } from './Label'
 
 export function IssueItem({ issue }: IssueItemProps) {
   const assigneeUser = useUserData(issue.assignee)
@@ -20,9 +21,7 @@ export function IssueItem({ issue }: IssueItemProps) {
         <span>
           <Link to={`/issue/${issue.number}`}>{issue.title}</Link>
           {issue.labels.map((label) => (
-            <span key={label} className={`label red`}>
-              {label}
-            </span>
+            <Label key={label} labelId={label} />
           ))}
         </span>
         <small>
