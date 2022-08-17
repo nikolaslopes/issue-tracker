@@ -8,7 +8,7 @@ export interface ILabel {
 
 export const useLabelsData = () => {
   async function fetchLabels() {
-    const response = await fetch('api/labels')
+    const response = await fetch('/api/labels')
     const data: ILabel[] = await response.json()
 
     return data

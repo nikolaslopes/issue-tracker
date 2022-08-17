@@ -7,6 +7,7 @@ export interface IUser {
 }
 
 export const useUserData = (userId: string) => {
+  console.log(userId)
   async function fetchUser() {
     const response = await fetch(`/api/users/${userId}`)
     const data: IUser = await response.json()
@@ -14,7 +15,8 @@ export const useUserData = (userId: string) => {
     return data
   }
 
-  const userQuery = useQuery(['user', userId], fetchUser)
-
+  const userQuery = useQuery(['user', userId], fetchUser, {
+    enabled: userId !== null,
+  })
   return userQuery
 }
