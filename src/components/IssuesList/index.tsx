@@ -3,16 +3,18 @@ import { fetchIssuesList } from './services'
 import { IssueItem } from './components/IssueItem'
 import { ILabelList } from '../LabelList'
 
-type IIssuesList = Pick<ILabelList, 'selectedLabels'>
+export type IIssuesList = Pick<ILabelList, 'selectedLabels'>
 
 export function IssuesList({ selectedLabels }: IIssuesList) {
-  const labesQueryString = selectedLabels
+  const labelsQueryString = selectedLabels
     .map((label) => {
       return `labels[]=${label.id}`
     })
     .join('&')
 
-  const issuesQuery = useQuery(['issues', { selectedLabels }], fetchIssuesList)
+  const issuesQuery = useQuery(['issues', { selectedLabels }], () =>
+    fetchIssuesList(labelsQueryString)
+  )
 
   return (
     <div>
