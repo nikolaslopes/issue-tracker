@@ -1,11 +1,11 @@
 import { ILabel, useLabelsData } from '../../helpers/useLabelsData'
 
-interface ILabelList {
-  selected: ILabel[]
+export interface ILabelList {
+  selectedLabels: ILabel[]
   toggle: (label: ILabel) => void
 }
 
-export function LabelList({ selected, toggle }: ILabelList) {
+export function LabelList({ selectedLabels, toggle }: ILabelList) {
   const labelsQuery = useLabelsData()
 
   return (
@@ -20,7 +20,7 @@ export function LabelList({ selected, toggle }: ILabelList) {
               <button
                 onClick={() => toggle(label)}
                 className={`label ${
-                  selected.includes(label) ? 'selected' : ''
+                  selectedLabels.includes(label) ? 'selected' : ''
                 } ${label.color}`}
               >
                 {label.name}

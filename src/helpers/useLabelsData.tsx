@@ -14,6 +14,6 @@ export const useLabelsData = () => {
     return data
   }
 
-  const labelsQuery = useQuery(['lables'], fetchLabels)
+  const labelsQuery = useQuery(['labels'], fetchLabels)
   return labelsQuery
 }

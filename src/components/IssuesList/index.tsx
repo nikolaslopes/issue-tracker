@@ -1,9 +1,20 @@
 import { useQuery } from '@tanstack/react-query'
 import { fetchIssuesList } from './services'
 import { IssueItem } from './components/IssueItem'
+import { ILabelList } from '../LabelList'
 
-export function IssuesList() {
-  const issuesQuery = useQuery(['issues'], fetchIssuesList)
+export type IIssuesList = Pick<ILabelList, 'selectedLabels'>
+
+export function IssuesList({ selectedLabels }: IIssuesList) {
+  const labelsQueryString = selectedLabels
+    .map((label) => {
+      return `labels[]=${label.id}`
+    })
+    .join('&')
+
+  const issuesQuery = useQuery(['issues', { selectedLabels }], () =>
+    fetchIssuesList(labelsQueryString)
+  )
 
   return (
     <div>

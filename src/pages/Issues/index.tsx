@@ -7,8 +7,6 @@ export function Issues() {
   const [labels, setLabels] = useState<ILabel[]>([])
 
   function toggleLabel(label: ILabel) {
-    console.log('label:', label)
-
     setLabels((prevState) =>
       prevState.includes(label)
         ? prevState.filter((currentLabel) => currentLabel !== label)
@@ -16,17 +14,15 @@ export function Issues() {
     )
   }
 
-  console.log(labels)
-
   return (
     <div>
       <main>
         <section>
           <h1>Issues</h1>
-          <IssuesList />
+          <IssuesList selectedLabels={labels} />
         </section>
         <aside>
-          <LabelList selected={labels} toggle={toggleLabel} />
+          <LabelList selectedLabels={labels} toggle={toggleLabel} />
         </aside>
       </main>
     </div>
