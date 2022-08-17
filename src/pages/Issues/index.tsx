@@ -6,7 +6,7 @@ import { ILabel } from '../../helpers/useLabelsData'
 
 export function Issues() {
   const [labels, setLabels] = useState<ILabel[]>([])
-  const [status, setStatus] = useState('sassfsf')
+  const [status, setStatus] = useState('')
 
   function toggleLabel(label: ILabel) {
     setLabels((prevState) =>
@@ -26,7 +26,10 @@ export function Issues() {
         <aside>
           <LabelList selectedLabels={labels} toggle={toggleLabel} />
           <h3>Status</h3>
-          <StatusSelect value={status} />
+          <StatusSelect
+            value={status}
+            onChange={(event) => setStatus(event.target.value)}
+          />
         </aside>
       </main>
     </div>

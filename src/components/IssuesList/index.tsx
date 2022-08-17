@@ -4,7 +4,7 @@ import { IssueItem } from './components/IssueItem'
 import { ILabelList } from '../LabelList'
 
 export type IIssuesList = Pick<ILabelList, 'selectedLabels'> & {
-  status: any
+  status: string
 }
 
 export function IssuesList({ selectedLabels, status }: IIssuesList) {
@@ -16,7 +16,7 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
 
   const statusString = status ? `&status=${status}` : ''
 
-  const issuesQuery = useQuery(['issues', { selectedLabels }], () =>
+  const issuesQuery = useQuery(['issues', { selectedLabels, status }], () =>
     fetchIssuesList({ labelsParam: labelsString, statusParam: statusString })
   )
 
