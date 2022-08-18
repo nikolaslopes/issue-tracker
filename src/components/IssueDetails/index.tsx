@@ -10,6 +10,8 @@ export function IssueDetails() {
 
   const commentsQuery = useIssueComments(number)
 
+  console.log(commentsQuery.data)
+
   return (
     <div className="issue-details">
       {issueQuery.isLoading ? (

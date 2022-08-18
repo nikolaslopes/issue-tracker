@@ -1,3 +1,10 @@
+interface IComment {
+  comment: string
+  createdBy: string
+  createdDate: string
+  id: string
+}
+
 export interface IssueProps {
   id: string
   title: string
@@ -6,7 +13,7 @@ export interface IssueProps {
   createdBy: string
   assignee: string
   createdDate: string
-  comments: Array<string>
+  comments: Array<IComment>
   labels: Array<string>
 }
 
