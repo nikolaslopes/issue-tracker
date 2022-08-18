@@ -1,38 +1,42 @@
 import { GoIssueClosed, GoIssueOpened } from 'react-icons/go'
 import { possibleStatus } from '../../helpers/defaultData'
-import { IssueProps } from '../../interfaces/global'
+import { useUserData } from '../../helpers/useUserData'
+import { IssueItemFormatted, IssueProps } from '../../interfaces/global'
 
-export type IssueHeaderProps = Omit<IssueProps, 'labels' | 'assignee' | 'id'>
+export interface IssueHeaderProps {
+  issue: IssueItemFormatted
+}
 
-export const IssueHeader = ({
-  title,
-  status = 'todo',
-  number,
-  createdBy,
-  createdDate,
-  comments,
-}: IssueHeaderProps) => {
-  const statusObj = possibleStatus.find((item) => item.id === status)
+export const IssueHeader = ({ issue }: IssueHeaderProps) => {
+  const statusObj = possibleStatus.find((item) => item.id === issue.status)
+
+  const createdUser = useUserData(issue.createdBy)
 
   return (
     <header>
       <h2>
-        {title} <span>#{number}</span>
+        {issue.title} <span>#{issue.number}</span>
       </h2>
 
       <div>
         <span
           className={
-            status === 'done' || status === 'cancelled' ? 'closed' : 'open'
+            issue.status === 'done' || issue.status === 'cancelled'
+              ? 'closed'
+              : 'open'
           }
         >
-          {status === 'done' || status === 'cancelled' ? (
+          {issue.status === 'done' || issue.status === 'cancelled' ? (
             <GoIssueClosed />
           ) : (
             <GoIssueOpened />
           )}
           {statusObj?.label}
         </span>
+        <span className="created-by">
+          {createdUser.isLoading ? '...' : createdUser.data?.name}
+        </span>
+        opened this issue
       </div>
     </header>
   )
