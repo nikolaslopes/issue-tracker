@@ -15,7 +15,7 @@ export function IssueDetails() {
         <p>Loading issue...</p>
       ) : (
         <>
-          <IssueHeader issue={issueQuery.data} />
+          <IssueHeader {...issueQuery.data} />
         </>
       )}
     </div>

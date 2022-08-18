@@ -2,28 +2,31 @@ import { GoIssueClosed, GoIssueOpened } from 'react-icons/go'
 import { possibleStatus } from '../../helpers/defaultData'
 import { IssueProps } from '../../interfaces/global'
 
-export type IssueHeaderProps = {
-  issue: Omit<IssueProps, 'labels' | 'assignee' | 'id'>
-}
+export type IssueHeaderProps = Omit<IssueProps, 'labels' | 'assignee' | 'id'>
 
-export const IssueHeader = ({ issue }: IssueHeaderProps) => {
-  const statusObj = possibleStatus.find((status) => status.id === issue.status)
+export const IssueHeader = ({
+  title,
+  status = 'todo',
+  number,
+  createdBy,
+  createdDate,
+  comments,
+}: IssueHeaderProps) => {
+  const statusObj = possibleStatus.find((item) => item.id === status)
 
   return (
     <header>
       <h2>
-        {issue.title} <span>#{issue.number}</span>
+        {title} <span>#{number}</span>
       </h2>
 
       <div>
         <span
           className={
-            issue.status === 'done' || issue.status === 'cancelled'
-              ? 'closed'
-              : 'open'
+            status === 'done' || status === 'cancelled' ? 'closed' : 'open'
           }
         >
-          {issue.status === 'done' || issue.status === 'cancelled' ? (
+          {status === 'done' || status === 'cancelled' ? (
             <GoIssueClosed />
           ) : (
             <GoIssueOpened />
