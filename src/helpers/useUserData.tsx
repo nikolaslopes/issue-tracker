@@ -6,7 +6,7 @@ export interface IUser {
   profilePictureUrl: string
 }
 
-export const useUserData = (userId: string) => {
+export const useUserData = (userId: string | undefined) => {
   async function fetchUser() {
     const response = await fetch(`/api/users/${userId}`)
     const data: IUser = await response.json()

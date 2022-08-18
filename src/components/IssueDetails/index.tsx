@@ -7,15 +7,13 @@ export function IssueDetails() {
   const { number } = useParams()
   const issueQuery = useIssueData(number)
 
-  console.log(issueQuery.data)
-
   return (
     <div className="issue-details">
       {issueQuery.isLoading ? (
         <p>Loading issue...</p>
       ) : (
         <>
-          <IssueHeader issue={issueQuery?.data} />
+          <IssueHeader issue={issueQuery.data} />
         </>
       )}
     </div>
