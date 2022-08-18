@@ -1,8 +1,8 @@
-interface IComment {
+export interface IComment {
+  id: string
   comment: string
   createdBy: string
   createdDate: string
-  id: string
 }
 
 export interface IssueProps {
