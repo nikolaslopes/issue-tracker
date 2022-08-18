@@ -1,5 +1,10 @@
 import { relativeDate } from '../../helpers/relativeDate'
-import { IssueProps, IssueItemFormatted } from '../../interfaces/global'
+import {
+  IssueProps,
+  IssueItemFormatted,
+  IIssuesSearchResults,
+  IIssuesSearchResultsFormatted,
+} from '../../interfaces/global'
 
 interface FetchIssuesListProps {
   labelsParam: string
@@ -16,10 +21,28 @@ export async function fetchIssuesList({
   const issueList: IssueItemFormatted[] = data.map((item) => {
     return {
       ...item,
-      formattedDate: relativeDate(item.createdDate),
       commentsCounter: item.comments.length,
+      formattedDate: relativeDate(item.createdDate),
     }
   })
+
+  return issueList
+}
+
+export const fetchIssuesSearchResults = async (searchValue: string) => {
+  const response = await fetch(`/api/search/issues?q=${searchValue}`)
+  const data: IIssuesSearchResults = await response.json()
+
+  const issueList: IIssuesSearchResultsFormatted = {
+    count: data.count,
+    items: data.items.map((item) => {
+      return {
+        ...item,
+        commentsCounter: item.comments.length,
+        formattedDate: relativeDate(item.createdDate),
+      }
+    }),
+  }
 
   return issueList
 }

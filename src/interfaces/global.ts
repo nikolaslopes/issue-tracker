@@ -25,3 +25,18 @@ export type IssueItemFormatted = IssueProps & {
   commentsCounter: number
   formattedDate: string
 }
+
+export type IIssuesSearchResults = {
+  count: number
+  items: Array<IssueProps>
+}
+
+export type IIssuesSearchResultsFormatted = {
+  count: number
+  items: Array<
+    IssueProps & {
+      commentsCounter: number
+      formattedDate: string
+    }
+  >
+}
