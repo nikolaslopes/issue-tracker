@@ -5,6 +5,10 @@ export interface IComment {
   createdDate: string
 }
 
+export type IComments = Omit<IComment, 'createdDate'> & {
+  formattedDate: string
+}
+
 export interface IssueProps {
   id: string
   title: string

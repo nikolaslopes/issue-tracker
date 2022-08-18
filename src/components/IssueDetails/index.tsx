@@ -27,7 +27,7 @@ export function IssueDetails() {
                 <p>loading...</p>
               ) : (
                 commentsQuery.data?.map((comment) => (
-                  <Comment key={comment.id} />
+                  <Comment key={comment.id} {...comment} />
                 ))
               )}
             </section>
