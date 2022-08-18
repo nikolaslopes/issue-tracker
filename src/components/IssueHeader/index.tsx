@@ -49,7 +49,8 @@ export const IssueHeader = ({ issue }: IssueHeaderProps) => {
         <span className="created-by">
           {createdUser.isLoading ? '...' : createdUser.data?.name}
         </span>
-        opened this issue
+        opened this issue {issue?.formattedDate} - {issue?.commentsCounter}{' '}
+        comments
       </div>
     </header>
   )
