@@ -1,4 +1,5 @@
 import { SelectHTMLAttributes } from 'react'
+import { possibleStatus } from '../../helpers/defaultData'
 
 type StatusSelectProps = SelectHTMLAttributes<HTMLSelectElement>
 
@@ -14,8 +15,3 @@ export const StatusSelect = ({ ...rest }: StatusSelectProps) => {
     </select>
   )
 }
-
-const possibleStatus = [
-  { id: 'backlog', label: 'backlog' },
-  { id: 'todo', label: 'to-do' },
-]
