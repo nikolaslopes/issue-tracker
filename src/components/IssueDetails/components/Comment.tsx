@@ -32,8 +32,10 @@ export const Comment = ({
       />
       <div>
         <div className="comment-header">
-          <span>{user?.name}</span> commented <span>{formattedDate}</span>
+          <span>{user?.name}</span> commented
+          <span>{formattedDate}</span>
         </div>
+        <div className="comment-body">{comment}</div>
       </div>
     </div>
   )
