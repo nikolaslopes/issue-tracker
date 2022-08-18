@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
+import { IComment, IssueProps } from '../interfaces/global'
 
 export const useIssueComments = (issueNumber: string | undefined) => {
   async function fetchComments() {
     const response = await fetch(`/api/issues/${issueNumber}/comments`)
-    const data = response.json()
+    const data: IComment[] = await response.json()
 
     return data
   }
@@ -12,4 +13,6 @@ export const useIssueComments = (issueNumber: string | undefined) => {
     ['issues', issueNumber, 'comments'],
     fetchComments
   )
+
+  return commentsQuery
 }

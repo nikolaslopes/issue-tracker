@@ -23,8 +23,6 @@ export const IssueHeader = ({ issue }: IssueHeaderProps) => {
 
   const createdUser = useUserData(issue?.createdBy)
 
-  console.log(createdUser.data)
-
   return (
     <header>
       <h2>
