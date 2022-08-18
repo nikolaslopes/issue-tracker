@@ -1,8 +1,16 @@
-import { useQuery } from '@tanstack/react-query'
 import { useUserData } from '../../../helpers/useUserData'
-import { IComment } from '../../../interfaces/global'
+import { IComments } from '../../../interfaces/global'
 
-export const Comment = ({ comment, createdBy, createdDate }: IComment) => {
+export type CommentComponentProps = Pick<
+  IComments,
+  'comment' | 'createdBy' | 'formattedDate'
+>
+
+export const Comment = ({
+  comment,
+  createdBy,
+  formattedDate,
+}: CommentComponentProps) => {
   const userQuery = useUserData(createdBy)
   const user = userQuery.data
 
@@ -22,6 +30,11 @@ export const Comment = ({ comment, createdBy, createdDate }: IComment) => {
         src={user?.profilePictureUrl}
         alt={`${user?.name ? user.name : 'Commenter'} Avatar`}
       />
+      <div>
+        <div className="comment-header">
+          <span>{user?.name}</span> commented <span>{formattedDate}</span>
+        </div>
+      </div>
     </div>
   )
 }
