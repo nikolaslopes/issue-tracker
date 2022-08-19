@@ -14,6 +14,9 @@ export const useLabelsData = () => {
     return data
   }
 
-  const labelsQuery = useQuery(['labels'], fetchLabels)
+  const labelsQuery = useQuery(['labels'], fetchLabels, {
+    staleTime: 1000 * 60 * 60, // 1 hour
+  })
+
   return labelsQuery
 }
