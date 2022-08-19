@@ -16,6 +16,8 @@ export const useUserData = (userId: string | undefined) => {
 
   const userQuery = useQuery(['user', userId], fetchUser, {
     enabled: userId !== null,
+    staleTime: 1000 * 60 * 5, // 5 minutes
   })
+
   return userQuery
 }

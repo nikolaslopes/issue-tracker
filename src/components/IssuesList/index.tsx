@@ -19,8 +19,13 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
 
   const statusString = status ? `&status=${status}` : ''
 
-  const issuesQuery = useQuery(['issues', { selectedLabels, status }], () =>
-    fetchIssuesList({ labelsParam: labelsString, statusParam: statusString })
+  const issuesQuery = useQuery(
+    ['issues', { selectedLabels, status }],
+    () =>
+      fetchIssuesList({ labelsParam: labelsString, statusParam: statusString }),
+    {
+      staleTime: 1000 * 60, // 1 minute
+    }
   )
 
   const searchQuery = useQuery(
@@ -31,6 +36,8 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
     }
   )
 
+  const searchResults = searchQuery.data
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const data = new FormData(event.target as HTMLFormElement)
@@ -38,11 +45,7 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
     const value = String(data.get('search'))
 
     setSearchValue(value)
-
-    console.log(value)
   }
-
-  console.log(searchQuery.data)
 
   return (
     <div>
@@ -77,11 +80,11 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
             <p>Loading...</p>
           ) : (
             <>
-              <p>{searchQuery.data?.length} Results</p>
+              <p>{searchResults?.count} Results</p>
               <ul className="issues-list">
-                {/* {searchQuery.data?.items.map((issue) => (
+                {searchQuery.data?.items.map((issue) => (
                   <IssueItem key={issue.id} issue={issue} />
-                ))} */}
+                ))}
               </ul>
             </>
           )}
