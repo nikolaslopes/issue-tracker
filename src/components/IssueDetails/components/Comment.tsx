@@ -1,10 +1,5 @@
 import { useUserData } from '../../../helpers/useUserData'
-import { IComments } from '../../../interfaces/global'
-
-export type CommentComponentProps = Pick<
-  IComments,
-  'comment' | 'createdBy' | 'formattedDate'
->
+import { CommentComponentProps } from '../types'
 
 export const Comment = ({
   comment,
