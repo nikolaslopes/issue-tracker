@@ -1,12 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { fetchIssuesList, fetchIssuesSearchResults } from './services'
 import { IssueItem } from './components/IssueItem'
-import { ILabelList } from '../LabelList'
 import { FormEvent, useState } from 'react'
-
-export type IIssuesList = Pick<ILabelList, 'selectedLabels'> & {
-  status: string
-}
+import { IIssuesList } from './types'
 
 export function IssuesList({ selectedLabels, status }: IIssuesList) {
   const [searchValue, setSearchValue] = useState('')

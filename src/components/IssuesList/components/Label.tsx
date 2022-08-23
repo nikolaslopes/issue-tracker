@@ -1,8 +1,5 @@
 import { useLabelsData } from '../../../helpers/useLabelsData'
-
-interface ILabel {
-  labelId: string
-}
+import { ILabel } from '../types'
 
 export const Label = ({ labelId }: ILabel) => {
   const labelsQuery = useLabelsData()
