@@ -1,9 +1,5 @@
-import { ILabel, useLabelsData } from '../../helpers/useLabelsData'
-
-export interface ILabelList {
-  selectedLabels: ILabel[]
-  toggle: (label: ILabel) => void
-}
+import { useLabelsData } from '../../helpers/useLabelsData'
+import { ILabelList } from './types'
 
 export function LabelList({ selectedLabels, toggle }: ILabelList) {
   const labelsQuery = useLabelsData()
