@@ -1,7 +1,5 @@
-import { SelectHTMLAttributes } from 'react'
 import { possibleStatus } from '../../helpers/defaultData'
-
-type StatusSelectProps = SelectHTMLAttributes<HTMLSelectElement>
+import { StatusSelectProps } from './types'
 
 export const StatusSelect = ({ ...rest }: StatusSelectProps) => {
   return (
