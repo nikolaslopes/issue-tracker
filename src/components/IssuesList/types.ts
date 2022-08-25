@@ -1,5 +1,5 @@
 import { IssueItemFormatted } from '../../interfaces/global'
-import { ILabelList } from '../LabelList'
+import { ILabelList } from '../LabelList/types'
 
 export type IIssuesList = Pick<ILabelList, 'selectedLabels'> & {
   status: string

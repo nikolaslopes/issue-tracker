@@ -15,7 +15,9 @@ export async function fetchIssuesList({
   labelsParam,
   statusParam,
 }: FetchIssuesListProps) {
-  const response = await fetch(`/api/issues?${labelsParam}${statusParam}`)
+  const url = `/api/issues?${labelsParam}${statusParam}`
+
+  const response = await fetch(url)
   const data: IssueProps[] = await response.json()
 
   const issueList: IssueItemFormatted[] = data.map((item) => {
