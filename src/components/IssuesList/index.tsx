@@ -15,13 +15,8 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
 
   const statusString = status ? `&status=${status}` : ''
 
-  const issuesQuery = useQuery(
-    ['issues', { selectedLabels, status }],
-    () =>
-      fetchIssuesList({ labelsParam: labelsString, statusParam: statusString }),
-    {
-      staleTime: 1000 * 60, // 1 minute
-    }
+  const issuesQuery = useQuery(['issues', { selectedLabels, status }], () =>
+    fetchIssuesList({ labelsParam: labelsString, statusParam: statusString })
   )
 
   const searchQuery = useQuery(
