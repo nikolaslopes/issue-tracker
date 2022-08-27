@@ -3,8 +3,8 @@ import { IssueItemFormatted, IssueProps } from '../interfaces/global'
 import { relativeDate } from './relativeDate'
 
 export const useIssueData = (issueNumber: string | undefined) => {
-  async function fetchIssue() {
-    const response = await fetch(`/api/issues/${issueNumber}`)
+  async function fetchIssue(signal: AbortSignal | undefined) {
+    const response = await fetch(`/api/issues/${issueNumber}`, { signal })
     const data: IssueProps = await response.json()
 
     const issueList: IssueItemFormatted = {
@@ -17,6 +17,9 @@ export const useIssueData = (issueNumber: string | undefined) => {
     return issueList
   }
 
-  const issueQuery = useQuery(['issue', issueNumber], fetchIssue)
+  const issueQuery = useQuery(
+    ['issue', issueNumber],
+    ({ signal }) => fetchIssue
+  )
   return issueQuery
 }
