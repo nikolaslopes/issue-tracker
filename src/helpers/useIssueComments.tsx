@@ -3,8 +3,10 @@ import { IComment, IComments } from '../interfaces/global'
 import { relativeDate } from './relativeDate'
 
 export const useIssueComments = (issueNumber: string | undefined) => {
-  async function fetchComments() {
-    const response = await fetch(`/api/issues/${issueNumber}/comments`)
+  async function fetchComments(signal: AbortSignal | undefined) {
+    const response = await fetch(`/api/issues/${issueNumber}/comments`, {
+      signal,
+    })
     const data: IComment[] = await response.json()
 
     const comments: IComments[] = data.map((comment) => {
@@ -19,7 +21,7 @@ export const useIssueComments = (issueNumber: string | undefined) => {
 
   const commentsQuery = useQuery(
     ['issues', issueNumber, 'comments'],
-    fetchComments
+    ({ signal }) => fetchComments(signal)
   )
 
   return commentsQuery
