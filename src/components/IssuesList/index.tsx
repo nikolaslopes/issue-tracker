@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { fetchIssuesList, fetchIssuesSearchResults } from './services'
 import { IssueItem } from './components/IssueItem'
 import { FormEvent, useState } from 'react'
@@ -15,13 +15,19 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
 
   const statusString = status ? `&status=${status}` : ''
 
-  const issuesQuery = useQuery(['issues', { selectedLabels, status }], () =>
-    fetchIssuesList({ labelsParam: labelsString, statusParam: statusString })
+  const issuesQuery = useQuery(
+    ['issues', { selectedLabels, status }],
+    ({ signal }) =>
+      fetchIssuesList({
+        labelsParam: labelsString,
+        statusParam: statusString,
+        signal,
+      })
   )
 
   const searchQuery = useQuery(
     ['issues', 'search', searchValue],
-    () => fetchIssuesSearchResults(searchValue),
+    ({ signal }) => fetchIssuesSearchResults(searchValue, signal),
     {
       enabled: searchValue.length > 0,
     }
@@ -37,6 +43,8 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
 
     setSearchValue(value)
   }
+
+  const queryClient = useQueryClient()
 
   return (
     <div>
