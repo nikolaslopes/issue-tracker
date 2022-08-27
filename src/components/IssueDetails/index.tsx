@@ -7,6 +7,7 @@ import { Comment } from './components/Comment'
 
 export function IssueDetails() {
   const { number } = useParams()
+
   const issueQuery = useIssueData(number)
 
   const commentsQuery = useIssueComments(number)
