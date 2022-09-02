@@ -3,6 +3,7 @@ import { fetchIssuesList, fetchIssuesSearchResults } from './services'
 import { IssueItem } from './components/IssueItem'
 import { FormEvent, useState } from 'react'
 import { IIssuesList } from './types'
+import { Loader } from '../Loader'
 
 export function IssuesList({ selectedLabels, status }: IIssuesList) {
   const [searchValue, setSearchValue] = useState('')
@@ -44,8 +45,6 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
     setSearchValue(value)
   }
 
-  const queryClient = useQueryClient()
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -62,7 +61,8 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
           }}
         />
       </form>
-      <h2>Issues List</h2>
+
+      <h2>Issues List {issuesQuery.isFetching ? <Loader /> : null}</h2>
       {issuesQuery.isLoading ? (
         <p>Loading...</p>
       ) : searchQuery.fetchStatus === 'idle' &&
