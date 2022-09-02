@@ -4,6 +4,7 @@ import {
   Routes as RoutesWrapper,
   useMatch,
 } from 'react-router-dom'
+import { FetchingIndicator } from '../components/FetchingIndicator'
 import { AddIssue } from '../pages/AddIssue'
 import { Issue } from '../pages/Issue'
 import { Issues } from '../pages/Issues'
@@ -25,6 +26,7 @@ export function Routes() {
         <Route path="/add" element={<AddIssue />} />
         <Route path="/issue/:number" element={<Issue />} />
       </RoutesWrapper>
+      <FetchingIndicator />
     </div>
   )
 }
