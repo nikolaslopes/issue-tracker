@@ -6,17 +6,21 @@ export interface ILabel {
   name: string
 }
 
-export const useLabelsData = (signal: AbortSignal | undefined) => {
-  async function fetchLabels() {
+export const useLabelsData = () => {
+  async function fetchLabels(signal: AbortSignal | undefined) {
     const response = await fetch('/api/labels', { signal })
     const data: ILabel[] = await response.json()
 
     return data
   }
 
-  const labelsQuery = useQuery(['labels'], ({ signal }) => fetchLabels, {
-    staleTime: 1000 * 60 * 60, // 1 hour
-  })
+  const labelsQuery = useQuery(
+    ['labels'],
+    ({ signal }) => fetchLabels(signal),
+    {
+      staleTime: 1000 * 60 * 60, // 1 hour
+    }
+  )
 
   return labelsQuery
 }
