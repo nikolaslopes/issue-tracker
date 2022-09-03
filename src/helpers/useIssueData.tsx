@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { IssueItemFormatted, IssueProps } from '../interfaces/global'
+import { IssueItemFormatted, IssueProps } from '../types/global'
 import { relativeDate } from './relativeDate'
 
 export const useIssueData = (issueNumber: string | undefined) => {

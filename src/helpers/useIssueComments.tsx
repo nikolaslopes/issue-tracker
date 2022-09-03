@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { IComment, IComments } from '../interfaces/global'
+import { IComment, IComments } from '../types/global'
 import { relativeDate } from './relativeDate'
 
 export const useIssueComments = (issueNumber: string | undefined) => {
