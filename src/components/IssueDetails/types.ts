@@ -1,4 +1,4 @@
-import { IComments } from '../../interfaces/global'
+import { IComments } from '../../types/global'
 
 export type CommentComponentProps = Pick<
   IComments,
