@@ -1,4 +1,4 @@
-import { IssueItemFormatted } from '../../interfaces/global'
+import { IssueItemFormatted } from '../../types/global'
 
 export interface IssueHeaderProps {
   issue:
