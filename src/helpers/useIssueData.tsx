@@ -17,7 +17,7 @@ export const useIssueData = (issueNumber: string | undefined) => {
     return issueList
   }
 
-  const issueQuery = useQuery(['issue', issueNumber], ({ signal }) =>
+  const issueQuery = useQuery(['issues', issueNumber], ({ signal }) =>
     fetchIssue(signal)
   )
   return issueQuery

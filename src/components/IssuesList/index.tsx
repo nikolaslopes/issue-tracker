@@ -28,7 +28,6 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
   )
 
   issuesQuery.data?.forEach((issue) => {
-    console.log(issue)
     queryClient.setQueryData(['issues', String(issue.number)], issue)
   })
 
