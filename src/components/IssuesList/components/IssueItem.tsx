@@ -15,18 +15,13 @@ export function IssueItem({ issue }: IssueItemProps) {
   return (
     <li
       onMouseEnter={() => {
-        console.log('enter')
         queryClient.prefetchQuery(
           ['issues', String(issue.number)],
-          ({ signal }) => {
-            fetchIssue(signal, issue.number)
-          }
+          ({ signal }) => fetchIssue(signal, String(issue.number))
         )
         queryClient.prefetchQuery(
           ['issues', String(issue.number), 'comments'],
-          ({ signal }) => {
-            fetchComments(signal, issue.number)
-          }
+          ({ signal }) => fetchComments(signal, String(issue.number))
         )
       }}
     >

@@ -3,8 +3,8 @@ import { IssueItemFormatted, IssueProps } from '../types/global'
 import { relativeDate } from './relativeDate'
 
 export async function fetchIssue(
-  signal: AbortSignal | undefined,
-  issueNumber: string | number | undefined
+  signal: AbortSignal | undefined | null,
+  issueNumber: string | undefined
 ) {
   const response = await fetch(`/api/issues/${issueNumber}`, { signal })
   const data: IssueProps = await response.json()

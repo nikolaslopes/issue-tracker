@@ -4,7 +4,7 @@ import { relativeDate } from './relativeDate'
 
 export async function fetchComments(
   signal: AbortSignal | undefined,
-  issueNumber: string | number | undefined
+  issueNumber: string | undefined
 ) {
   const response = await fetch(`/api/issues/${issueNumber}/comments`, {
     signal,
