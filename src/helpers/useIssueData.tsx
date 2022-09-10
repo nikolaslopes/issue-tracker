@@ -2,23 +2,26 @@ import { useQuery } from '@tanstack/react-query'
 import { IssueItemFormatted, IssueProps } from '../types/global'
 import { relativeDate } from './relativeDate'
 
-export const useIssueData = (issueNumber: string | undefined) => {
-  async function fetchIssue(signal: AbortSignal | undefined) {
-    const response = await fetch(`/api/issues/${issueNumber}`, { signal })
-    const data: IssueProps = await response.json()
+export async function fetchIssue(
+  signal: AbortSignal | undefined,
+  issueNumber: string | number | undefined
+) {
+  const response = await fetch(`/api/issues/${issueNumber}`, { signal })
+  const data: IssueProps = await response.json()
 
-    const issueList: IssueItemFormatted = {
-      ...data,
-      status: data.status ? data.status : 'todo',
-      formattedDate: relativeDate(data.createdDate),
-      commentsCounter: data.comments.length,
-    }
-
-    return issueList
+  const issueList: IssueItemFormatted = {
+    ...data,
+    status: data.status ? data.status : 'todo',
+    commentsCounter: data.comments.length,
+    formattedDate: relativeDate(data.createdDate),
   }
 
+  return issueList
+}
+
+export const useIssueData = (issueNumber: string | undefined) => {
   const issueQuery = useQuery(['issues', issueNumber], ({ signal }) =>
-    fetchIssue(signal)
+    fetchIssue(signal, issueNumber)
   )
   return issueQuery
 }
