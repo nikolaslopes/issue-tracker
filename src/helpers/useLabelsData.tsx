@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { defaultLabels } from './defaultData'
 
 export interface ILabel {
   color: string
@@ -19,6 +20,7 @@ export const useLabelsData = () => {
     ({ signal }) => fetchLabels(signal),
     {
       staleTime: 1000 * 60 * 60, // 1 hour
+      placeholderData: defaultLabels,
     }
   )
 

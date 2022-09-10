@@ -7,6 +7,7 @@ import { Loader } from '../Loader'
 
 export function IssuesList({ selectedLabels, status }: IIssuesList) {
   const [searchValue, setSearchValue] = useState('')
+  const queryClient = useQueryClient()
 
   const labelsString = selectedLabels
     .map((label) => {
@@ -25,6 +26,10 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
         signal,
       })
   )
+
+  issuesQuery.data?.forEach((issue) => {
+    queryClient.setQueryData(['issues', String(issue.number)], issue)
+  })
 
   const searchQuery = useQuery(
     ['issues', 'search', searchValue],
