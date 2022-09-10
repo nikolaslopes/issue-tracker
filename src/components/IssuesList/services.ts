@@ -4,7 +4,7 @@ import {
   IssueItemFormatted,
   IIssuesSearchResults,
   IIssuesSearchResultsFormatted,
-} from '../../interfaces/global'
+} from '../../types/global'
 
 interface FetchIssuesListProps {
   labelsParam: string
@@ -18,7 +18,6 @@ export async function fetchIssuesList({
   signal,
 }: FetchIssuesListProps) {
   const url = `/api/issues?${labelsParam}${statusParam}`
-
   const response = await fetch(url, { signal })
   const data: IssueProps[] = await response.json()
 
