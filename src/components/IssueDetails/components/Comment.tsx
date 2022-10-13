@@ -1,13 +1,13 @@
-import { useUserData } from '../../../helpers/useUserData'
-import { CommentComponentProps } from '../types'
+import { useUserData } from '../../../helpers/useUserData';
+import { CommentComponentProps } from '../types';
 
 export const Comment = ({
   comment,
   createdBy,
   formattedDate,
 }: CommentComponentProps) => {
-  const userQuery = useUserData(createdBy)
-  const user = userQuery.data
+  const userQuery = useUserData(createdBy);
+  const user = userQuery.data;
 
   if (userQuery.isLoading) {
     return (
@@ -16,7 +16,7 @@ export const Comment = ({
           <div className="comment-header">Loading...</div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -27,11 +27,10 @@ export const Comment = ({
       />
       <div>
         <div className="comment-header">
-          <span>{user?.name}</span> commented
-          <span>{formattedDate}</span>
+          <span>{user?.name}</span> commented <span>{formattedDate}</span>
         </div>
         <div className="comment-body">{comment}</div>
       </div>
     </div>
-  )
-}
+  );
+};

@@ -1,5 +1,5 @@
-import { possibleStatus } from '../../helpers/defaultData'
-import { StatusSelectProps } from './types'
+import { possibleStatus } from '../../helpers/defaultData';
+import { StatusSelectProps } from './types';
 
 export const StatusSelect = ({ ...rest }: StatusSelectProps) => {
   return (
@@ -11,5 +11,5 @@ export const StatusSelect = ({ ...rest }: StatusSelectProps) => {
         </option>
       ))}
     </select>
-  )
-}
+  );
+};
