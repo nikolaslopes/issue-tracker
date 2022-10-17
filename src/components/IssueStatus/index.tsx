@@ -1,18 +1,47 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent } from 'react';
 import { StatusSelect } from '../StatusSelect';
 import { updateIssueStatus } from './services';
 import { IssueStatusProps } from './types';
 
 export const IssueStatus = ({ status, issueNumber }: IssueStatusProps) => {
-  const updateIssueStatusMutation = useMutation(updateIssueStatus, {});
+  const queryClient = useQueryClient();
+  const updateIssueStatusMutation = useMutation(updateIssueStatus, {
+    onMutate: (variables) => {
+      const savedCache = queryClient.getQueryData<IssueStatusProps>([
+        'issues',
+        issueNumber,
+      ]);
+
+      queryClient.setQueryData(['issues', issueNumber], {
+        ...savedCache,
+        status: variables.status,
+      });
+
+      function rollback() {
+        queryClient.setQueryData(['issues', issueNumber], {
+          ...savedCache,
+        });
+      }
+
+      return () => rollback();
+    },
+    onError: (error, variables, rollback) => {
+      console.log('error', error);
+      rollback?.();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(['issues', issueNumber], {
+        exact: true,
+      });
+    },
+  });
 
   function onUpdateIssueStatus(event: ChangeEvent<HTMLSelectElement>) {
     updateIssueStatusMutation.mutate({
       status: event.target.value,
       issueNumber,
     });
-    console.log(event.target.value);
   }
 
   return (
