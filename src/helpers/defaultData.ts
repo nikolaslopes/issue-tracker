@@ -14,7 +14,7 @@ export const defaultLabels = [
     name: 'enhancement',
     color: 'cyan',
   },
-]
+];
 
 export const defaultUsers = [
   {
@@ -29,7 +29,7 @@ export const defaultUsers = [
     profilePictureUrl:
       'https://res.cloudinary.com/uidotdev/image/twitter_name/u2',
   },
-]
+];
 
 export const defaultIssue = {
   id: 'issue_1',
@@ -41,7 +41,7 @@ export const defaultIssue = {
   createdBy: 'u_1',
   createdDate: new Date(),
   labels: [{ id: '1', name: 'bug', color: 'red' }],
-}
+};
 
 export const defaultComments = [
   {
@@ -51,7 +51,7 @@ export const defaultComments = [
     id: 'comment_1',
     issue_id: 'issue_1',
   },
-]
+];
 
 export const possibleStatus = [
   { id: 'backlog', label: 'Backlog' },
@@ -59,4 +59,4 @@ export const possibleStatus = [
   { id: 'inProgress', label: 'In Progress' },
   { id: 'done', label: 'Done' },
   { id: 'cancelled', label: 'Cancelled' },
-]
+];

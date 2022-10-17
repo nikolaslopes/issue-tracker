@@ -1,10 +1,15 @@
 import { possibleStatus } from '../../helpers/defaultData';
-import { StatusSelectProps } from './types';
+import { IStatusSelect } from './types';
 
-export const StatusSelect = ({ ...rest }: StatusSelectProps) => {
+export const StatusSelect = ({
+  noEmptyOption = false,
+  ...rest
+}: IStatusSelect) => {
   return (
     <select className="status-select" {...rest}>
-      <option value="">Select a status to filter</option>
+      {noEmptyOption ? null : (
+        <option value="ass">Select a status to filter</option>
+      )}
       {possibleStatus.map((status) => (
         <option key={status.id} value={status.id}>
           {status.label}

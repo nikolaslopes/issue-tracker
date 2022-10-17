@@ -7,7 +7,7 @@ export const AddIssue = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const addIssue = useMutation(createIssue, {
+  const addIssueMutation = useMutation(createIssue, {
     onSuccess: (data) => {
       queryClient.invalidateQueries(['issues'], { exact: true });
       queryClient.setQueryData(['issues', String(data.number)], data);
@@ -21,7 +21,7 @@ export const AddIssue = () => {
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData);
 
-    if (addIssue.isLoading && !data.title && !data.comment) {
+    if (addIssueMutation.isLoading && !data.title && !data.comment) {
       return;
     }
 
@@ -30,7 +30,7 @@ export const AddIssue = () => {
       comment: String(data.comment),
     };
 
-    addIssue.mutate(payload);
+    addIssueMutation.mutate(payload);
   }
 
   return (
@@ -45,7 +45,7 @@ export const AddIssue = () => {
         <textarea id="comment" name="comment" placeholder="Comment" />
 
         <button type="submit" disabled={false}>
-          {addIssue.isLoading ? 'Adding Issue...' : 'Add Issue'}
+          {addIssueMutation.isLoading ? 'Adding Issue...' : 'Add Issue'}
         </button>
       </form>
     </div>
