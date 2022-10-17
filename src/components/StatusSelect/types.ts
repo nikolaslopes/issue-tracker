@@ -1,3 +1,5 @@
-import { SelectHTMLAttributes } from 'react'
+import { SelectHTMLAttributes } from 'react';
 
-export type StatusSelectProps = SelectHTMLAttributes<HTMLSelectElement>
+export interface IStatusSelect extends SelectHTMLAttributes<HTMLSelectElement> {
+  noEmptyOption?: boolean;
+}

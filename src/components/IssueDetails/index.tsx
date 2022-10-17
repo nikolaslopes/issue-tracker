@@ -1,16 +1,17 @@
-import { useQuery } from '@tanstack/react-query'
-import { useParams } from 'react-router-dom'
-import { useIssueComments } from '../../helpers/useIssueComments'
-import { useIssueData } from '../../helpers/useIssueData'
-import { IssueHeader } from '../IssueHeader'
-import { Comment } from './components/Comment'
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
+import { useIssueComments } from '../../helpers/useIssueComments';
+import { useIssueData } from '../../helpers/useIssueData';
+import { IssueHeader } from '../IssueHeader';
+import { IssueStatus } from '../IssueStatus';
+import { Comment } from './components/Comment';
 
 export function IssueDetails() {
-  const { number } = useParams()
+  const { number } = useParams();
 
-  const issueQuery = useIssueData(number)
+  const issueQuery = useIssueData(number);
 
-  const commentsQuery = useIssueComments(number)
+  const commentsQuery = useIssueComments(number);
 
   return (
     <div className="issue-details">
@@ -30,9 +31,15 @@ export function IssueDetails() {
                 ))
               )}
             </section>
+            <aside>
+              <IssueStatus
+                status={issueQuery.data?.status}
+                issueNumber={String(issueQuery.data?.number)}
+              />
+            </aside>
           </main>
         </>
       )}
     </div>
-  )
+  );
 }
