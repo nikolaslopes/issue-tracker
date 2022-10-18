@@ -1,27 +1,27 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query';
 
 export interface IUser {
-  id: string
-  name: string
-  profilePictureUrl: string
+  id: string;
+  name: string;
+  profilePictureUrl: string;
 }
 
 export const useUserData = (userId: string | undefined) => {
   async function fetchUser(signal: AbortSignal | undefined) {
-    const response = await fetch(`/api/users/${userId}`, { signal })
-    const data: IUser = await response.json()
+    const response = await fetch(`/api/users/${userId}`, { signal });
+    const data: IUser = await response.json();
 
-    return data
+    return data;
   }
 
   const userQuery = useQuery(
-    ['user', userId],
+    ['users', userId],
     ({ signal }) => fetchUser(signal),
     {
       enabled: userId !== null,
       staleTime: 1000 * 60 * 5, // 5 minutes
     }
-  )
+  );
 
-  return userQuery
-}
+  return userQuery;
+};
