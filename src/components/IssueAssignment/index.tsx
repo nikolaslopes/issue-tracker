@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { FaUser } from 'react-icons/fa';
 import { GoGear } from 'react-icons/go';
 import { useUserData } from '../../helpers/useUserData';
-import { updateIssueStatus } from '../IssueStatus/services';
+import { Loader } from '../Loader';
 
 import { fetchUsers, updateAssignmentIssue } from './services';
 import { IssueAssignmentProps } from './types';
@@ -11,11 +12,14 @@ export const IssueAssignment = ({
   assignee,
   issueNumber,
 }: IssueAssignmentProps) => {
+  const queryClient = useQueryClient();
+
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const queryClient = useQueryClient();
   const userQuery = useUserData(assignee);
   const usersQuery = useQuery(['users'], fetchUsers);
+
+  const hasUser = userQuery.isSuccess && userQuery.data && !userQuery.isLoading;
 
   const updateAssignmentIssueMutation = useMutation(updateAssignmentIssue, {
     onMutate: (variables) => {
@@ -24,7 +28,7 @@ export const IssueAssignment = ({
         issueNumber,
       ]);
 
-      console.log(savedCache);
+      console.log('var', variables);
 
       queryClient.setQueryData(['issues', issueNumber], {
         ...savedCache,
@@ -40,7 +44,6 @@ export const IssueAssignment = ({
       return () => rollback();
     },
     onError: (error, variables, rollback) => {
-      console.log('error', error);
       rollback?.();
     },
     onSettled: () => {
@@ -50,13 +53,13 @@ export const IssueAssignment = ({
     },
   });
 
-  function handleOpenMenu() {
+  function toggleOpenMenu() {
     if (!usersQuery.isLoading) {
-      setMenuOpen(true);
+      setMenuOpen((prevState) => !prevState);
     }
   }
 
-  function handleUpdateAssignee() {
+  function handleUpdateAssignee(assignee: string) {
     updateAssignmentIssueMutation.mutate({
       assignee: assignee,
       issueNumber: issueNumber,
@@ -68,7 +71,7 @@ export const IssueAssignment = ({
       <div>
         <span>Assignment</span>
 
-        {userQuery.isSuccess && (
+        {hasUser ? (
           <div>
             <img
               src={userQuery.data.profilePictureUrl}
@@ -76,13 +79,22 @@ export const IssueAssignment = ({
             />
             {userQuery.data.name}
           </div>
+        ) : (
+          <div>
+            <FaUser />
+            {'None'}
+          </div>
         )}
+
+        {userQuery.isLoading && <Loader />}
       </div>
-      <GoGear onClick={handleOpenMenu} />
+
+      <GoGear onClick={toggleOpenMenu} />
+
       {menuOpen && (
         <div className="picker-menu">
           {usersQuery.data?.map((user) => (
-            <div key={user.id} onClick={() => {}}>
+            <div key={user.id} onClick={() => handleUpdateAssignee(user.id)}>
               <img src={user.profilePictureUrl} alt={user.name} />
               {user.name}
             </div>

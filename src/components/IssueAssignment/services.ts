@@ -4,7 +4,7 @@ export const updateAssignmentIssue = async ({
   assignee,
   issueNumber,
 }: IUpdateAssignmentIssue) => {
-  const response = await fetch(`/api/users/${assignee}`, {
+  const response = await fetch(`/api/issues/${issueNumber}`, {
     method: 'PUT',
     headers: {
       'content-type': 'application/json',

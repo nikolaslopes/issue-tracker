@@ -10,8 +10,9 @@ export function IssueDetails() {
   const { number } = useParams();
 
   const issueQuery = useIssueData(number);
-
   const commentsQuery = useIssueComments(number);
+
+  console.log('callhere');
 
   return (
     <div className="issue-details">
@@ -37,7 +38,7 @@ export function IssueDetails() {
                 issueNumber={String(issueQuery.data?.number)}
               />
               <IssueAssignment
-                assignee="u_2"
+                assignee={issueQuery.data?.assignee}
                 issueNumber={String(issueQuery.data?.number)}
               />
             </aside>
