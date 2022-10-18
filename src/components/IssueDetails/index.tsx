@@ -12,8 +12,6 @@ export function IssueDetails() {
   const issueQuery = useIssueData(number);
   const commentsQuery = useIssueComments(number);
 
-  console.log('callhere');
-
   return (
     <div className="issue-details">
       {issueQuery.isLoading ? (

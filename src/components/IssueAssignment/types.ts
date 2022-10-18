@@ -1,5 +1,5 @@
 export type IssueAssignmentProps = {
-  assignee: string | undefined;
+  assignee?: string;
   issueNumber: string;
 };
 

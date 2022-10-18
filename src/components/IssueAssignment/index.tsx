@@ -19,8 +19,6 @@ export const IssueAssignment = ({
   const userQuery = useUserData(assignee);
   const usersQuery = useQuery(['users'], fetchUsers);
 
-  const hasUser = userQuery.isSuccess && userQuery.data && !userQuery.isLoading;
-
   const updateAssignmentIssueMutation = useMutation(updateAssignmentIssue, {
     onMutate: (variables) => {
       const savedCache = queryClient.getQueryData<IssueAssignmentProps>([
@@ -28,11 +26,9 @@ export const IssueAssignment = ({
         issueNumber,
       ]);
 
-      console.log('var', variables);
-
       queryClient.setQueryData(['issues', issueNumber], {
         ...savedCache,
-        assignee: variables,
+        assignee: variables.assignee,
       });
 
       function rollback() {
@@ -55,11 +51,13 @@ export const IssueAssignment = ({
 
   function toggleOpenMenu() {
     if (!usersQuery.isLoading) {
+      console.log('test');
       setMenuOpen((prevState) => !prevState);
     }
   }
 
   function handleUpdateAssignee(assignee: string) {
+    toggleOpenMenu();
     updateAssignmentIssueMutation.mutate({
       assignee: assignee,
       issueNumber: issueNumber,
@@ -71,22 +69,26 @@ export const IssueAssignment = ({
       <div>
         <span>Assignment</span>
 
-        {hasUser ? (
-          <div>
-            <img
-              src={userQuery.data.profilePictureUrl}
-              alt={userQuery.data.name}
-            />
-            {userQuery.data.name}
-          </div>
+        {userQuery.isLoading ? (
+          <Loader />
         ) : (
-          <div>
-            <FaUser />
-            {'None'}
-          </div>
+          <>
+            {userQuery.data ? (
+              <div>
+                <img
+                  src={userQuery.data.profilePictureUrl}
+                  alt={userQuery.data.name}
+                />
+                {userQuery.data.name}
+              </div>
+            ) : (
+              <div>
+                <FaUser />
+                {'None'}
+              </div>
+            )}
+          </>
         )}
-
-        {userQuery.isLoading && <Loader />}
       </div>
 
       <GoGear onClick={toggleOpenMenu} />

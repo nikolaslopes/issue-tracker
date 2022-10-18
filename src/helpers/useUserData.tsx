@@ -14,6 +14,8 @@ export const useUserData = (userId: string | undefined) => {
     return data;
   }
 
+  console.log(userId);
+
   const userQuery = useQuery(
     ['users', userId],
     ({ signal }) => fetchUser(signal),
