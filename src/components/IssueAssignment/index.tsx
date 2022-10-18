@@ -64,34 +64,33 @@ export const IssueAssignment = ({
     });
   }
 
+  console.log(userQuery.data);
+
   return (
     <div className="issue-options">
       <div>
         <span>Assignment</span>
 
-        {userQuery.isLoading ? (
-          <Loader />
+        {userQuery.data ? (
+          <div>
+            <img
+              src={userQuery.data.profilePictureUrl}
+              alt={userQuery.data.name}
+            />
+            {userQuery.data.name}
+          </div>
         ) : (
-          <>
-            {userQuery.data ? (
-              <div>
-                <img
-                  src={userQuery.data.profilePictureUrl}
-                  alt={userQuery.data.name}
-                />
-                {userQuery.data.name}
-              </div>
-            ) : (
-              <div>
-                <FaUser />
-                {'None'}
-              </div>
-            )}
-          </>
+          <div>
+            <FaUser />
+            {'None'}
+          </div>
         )}
       </div>
 
-      <GoGear onClick={toggleOpenMenu} />
+      <GoGear
+        onClick={toggleOpenMenu}
+        opacity={usersQuery.isLoading ? 0.3 : 1}
+      />
 
       {menuOpen && (
         <div className="picker-menu">
