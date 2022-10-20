@@ -15,7 +15,7 @@ export const IssueLabels = ({ issueLabels, issueNumber }: IssueLabelProps) => {
   const queryClient = useQueryClient();
   const labelsQuery = useLabelsData();
 
-  function toggleMenu() {
+  function handleToggleMenu() {
     if (labelsQuery.isLoading) return;
 
     setMenuOpen(!menuOpen);
@@ -28,29 +28,29 @@ export const IssueLabels = ({ issueLabels, issueNumber }: IssueLabelProps) => {
         {labelsQuery.isLoading
           ? null
           : issueLabels?.map((issueLabel) => {
-              const labelDataObject = labelsQuery.data?.find(
+              const selectedLabel = labelsQuery.data?.find(
                 (label) => label.name === issueLabel
               );
 
               return (
                 <span
                   key={issueLabel}
-                  className={`label ${labelDataObject?.color}`}
+                  className={`label ${selectedLabel?.color}`}
                 >
-                  {labelDataObject?.name}
+                  {selectedLabel?.name}
                 </span>
               );
             })}
       </div>
 
-      <GoGear onClick={toggleMenu} />
+      <GoGear onClick={handleToggleMenu} />
 
       {menuOpen && (
         <div className="picker-menu labels">
           {labelsQuery.data?.map((label) => {
-            const selected = issueLabels?.includes(label.id);
+            const isLabelSelected = issueLabels?.includes(label.name);
             return (
-              <div key={label.id} className={selected ? 'selected' : ''}>
+              <div key={label.id} className={isLabelSelected ? 'selected' : ''}>
                 <span
                   className="label-dot"
                   style={{ backgroundColor: label.color }}
