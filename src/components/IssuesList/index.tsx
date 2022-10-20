@@ -1,21 +1,21 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { fetchIssuesList, fetchIssuesSearchResults } from './services'
-import { IssueItem } from './components/IssueItem'
-import { FormEvent, useState } from 'react'
-import { IIssuesList } from './types'
-import { Loader } from '../Loader'
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchIssuesList, fetchIssuesSearchResults } from './services';
+import { IssueItem } from './components/IssueItem';
+import { FormEvent, useState } from 'react';
+import { IIssuesList } from './types';
+import { Loader } from '../Loader';
 
 export function IssuesList({ selectedLabels, status }: IIssuesList) {
-  const [searchValue, setSearchValue] = useState('')
-  const queryClient = useQueryClient()
+  const [searchValue, setSearchValue] = useState('');
+  const queryClient = useQueryClient();
 
   const labelsString = selectedLabels
     .map((label) => {
-      return `labels[]=${label.id}`
+      return `labels[]=${label.id}`;
     })
-    .join('&')
+    .join('&');
 
-  const statusString = status ? `&status=${status}` : ''
+  const statusString = status ? `&status=${status}` : '';
 
   const issuesQuery = useQuery(
     ['issues', { selectedLabels, status }],
@@ -25,11 +25,11 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
         statusParam: statusString,
         signal,
       })
-  )
+  );
 
   issuesQuery.data?.forEach((issue) => {
-    queryClient.setQueryData(['issues', String(issue.number)], issue)
-  })
+    queryClient.setQueryData(['issues', String(issue.number)], issue);
+  });
 
   const searchQuery = useQuery(
     ['issues', 'search', searchValue],
@@ -37,17 +37,17 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
     {
       enabled: searchValue.length > 0,
     }
-  )
+  );
 
-  const searchResults = searchQuery.data
+  const searchResults = searchQuery.data;
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    const data = new FormData(event.target as HTMLFormElement)
+    event.preventDefault();
+    const data = new FormData(event.target as HTMLFormElement);
 
-    const value = String(data.get('search'))
+    const value = String(data.get('search'));
 
-    setSearchValue(value)
+    setSearchValue(value);
   }
 
   return (
@@ -61,7 +61,7 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
           placeholder="Search"
           onChange={(event) => {
             if (event.target.value.length === 0) {
-              setSearchValue('')
+              setSearchValue('');
             }
           }}
         />
@@ -95,5 +95,5 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
         </>
       )}
     </div>
-  )
+  );
 }

@@ -1,13 +1,13 @@
-import { IssueItemFormatted } from '../../types/global'
-import { ILabelList } from '../LabelList/types'
+import { IssueItemFormatted } from '../../types/global';
+import { LabelListProps } from '../LabelList/types';
 
-export type IIssuesList = Pick<ILabelList, 'selectedLabels'> & {
-  status: string
-}
+export type IIssuesList = Pick<LabelListProps, 'selectedLabels'> & {
+  status: string;
+};
 export interface IssueItemProps {
-  issue: IssueItemFormatted
+  issue: IssueItemFormatted;
 }
 
 export interface ILabel {
-  labelId: string
+  labelId: string;
 }
