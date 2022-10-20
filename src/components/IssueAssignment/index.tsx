@@ -49,7 +49,7 @@ export const IssueAssignment = ({
     },
   });
 
-  function toggleOpenMenu() {
+  function toggleMenu() {
     if (!usersQuery.isLoading) {
       console.log('test');
       setMenuOpen((prevState) => !prevState);
@@ -57,7 +57,7 @@ export const IssueAssignment = ({
   }
 
   function handleUpdateAssignee(assignee: string) {
-    toggleOpenMenu();
+    toggleMenu();
     updateAssignmentIssueMutation.mutate({
       assignee: assignee,
       issueNumber: issueNumber,
@@ -87,10 +87,7 @@ export const IssueAssignment = ({
         )}
       </div>
 
-      <GoGear
-        onClick={toggleOpenMenu}
-        opacity={usersQuery.isLoading ? 0.3 : 1}
-      />
+      <GoGear onClick={toggleMenu} opacity={usersQuery.isLoading ? 0.3 : 1} />
 
       {menuOpen && (
         <div className="picker-menu">

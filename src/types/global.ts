@@ -18,7 +18,7 @@ export interface IssueProps {
   assignee: string;
   createdDate: string;
   comments: Array<IComment>;
-  labels: Array<string>;
+  labels: string[];
 }
 
 export type IssueItemFormatted = IssueProps & {
