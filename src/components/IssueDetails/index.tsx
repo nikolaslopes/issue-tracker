@@ -13,8 +13,6 @@ export function IssueDetails() {
   const issueQuery = useIssueData(number);
   const commentsQuery = useIssueComments(number);
 
-  console.log(issueQuery.data?.labels);
-
   return (
     <div className="issue-details">
       {issueQuery.isLoading ? (
@@ -45,7 +43,7 @@ export function IssueDetails() {
               />
 
               <IssueLabels
-                issueLabels={issueQuery.data?.labels}
+                labels={issueQuery.data?.labels}
                 issueNumber={String(issueQuery.data?.number)}
               />
             </aside>

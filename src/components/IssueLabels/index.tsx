@@ -1,24 +1,74 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { GoGear } from 'react-icons/go';
 import { useLabelsData } from '../../helpers/useLabelsData';
-import { IssueProps } from '../../types/global';
 
-export type IssueLabelProps = {
-  issueLabels: string[] | undefined;
-  issueNumber: string;
-};
+import { updateIssueLabels } from './services';
+import { IssueLabelProps } from './types';
 
-export const IssueLabels = ({ issueLabels, issueNumber }: IssueLabelProps) => {
+export const IssueLabels = ({ labels, issueNumber }: IssueLabelProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const queryClient = useQueryClient();
   const labelsQuery = useLabelsData();
 
+  const queryClient = useQueryClient();
+  const updateIssueLabelsMutation = useMutation(updateIssueLabels, {
+    onMutate: (variables) => {
+      const newLabels = labels?.includes(variables.labelId)
+        ? labels.filter((label) => label !== variables.labelId)
+        : [...(labels !== undefined ? labels : []), variables.labelId];
+
+      const savedCache = queryClient.getQueryData<IssueLabelProps>([
+        'issues',
+        issueNumber,
+      ]);
+
+      queryClient.setQueryData(['issues', issueNumber], {
+        ...savedCache,
+        labels: newLabels,
+      });
+
+      function rollback() {
+        console.log(savedCache);
+        const rollbackLabels = savedCache?.labels?.includes(variables.labelId)
+          ? [...savedCache, variables.labelId]
+          : savedCache?.labels?.filter((label) => label !== variables.labelId);
+
+        console.log('roll', rollbackLabels);
+
+        queryClient.setQueryData(['issues', issueNumber], {
+          ...savedCache,
+          labels: rollbackLabels,
+        });
+      }
+
+      return () => rollback();
+    },
+    onError: (error, variables, rollback) => {
+      rollback?.();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(['issues', issueNumber], {
+        exact: true,
+      });
+    },
+  });
+
   function handleToggleMenu() {
-    if (labelsQuery.isLoading) return;
+    if (labelsQuery.isLoading) {
+      return;
+    }
 
     setMenuOpen(!menuOpen);
+  }
+
+  function handleUpdateIssueLabels(labelId: string) {
+    handleToggleMenu();
+    updateIssueLabelsMutation.mutate({
+      labels: labels,
+      issueNumber: issueNumber,
+      labelId: labelId,
+    });
   }
 
   return (
@@ -27,9 +77,9 @@ export const IssueLabels = ({ issueLabels, issueNumber }: IssueLabelProps) => {
         <span>Labels</span>
         {labelsQuery.isLoading
           ? null
-          : issueLabels?.map((issueLabel) => {
+          : labels?.map((issueLabel) => {
               const selectedLabel = labelsQuery.data?.find(
-                (label) => label.name === issueLabel
+                (label) => label.id === issueLabel
               );
 
               return (
@@ -48,9 +98,13 @@ export const IssueLabels = ({ issueLabels, issueNumber }: IssueLabelProps) => {
       {menuOpen && (
         <div className="picker-menu labels">
           {labelsQuery.data?.map((label) => {
-            const isLabelSelected = issueLabels?.includes(label.name);
+            const isLabelSelected = labels?.includes(label.id);
             return (
-              <div key={label.id} className={isLabelSelected ? 'selected' : ''}>
+              <div
+                key={label.id}
+                className={isLabelSelected ? 'selected' : ''}
+                onClick={() => handleUpdateIssueLabels(label.id)}
+              >
                 <span
                   className="label-dot"
                   style={{ backgroundColor: label.color }}
