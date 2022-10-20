@@ -9,7 +9,7 @@ export const updateIssueLabels = async ({
     ? labels.filter((label) => label !== labelId)
     : [...(labels !== undefined ? labels : []), labelId];
 
-  const response = await fetch(`/api/issueas/${issueNumber}`, {
+  const response = await fetch(`/api/issues/${issueNumber}`, {
     method: 'PUT',
     headers: {
       'content-type': 'application/json',

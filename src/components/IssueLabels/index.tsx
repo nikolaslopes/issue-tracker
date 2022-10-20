@@ -29,16 +29,8 @@ export const IssueLabels = ({ labels, issueNumber }: IssueLabelProps) => {
       });
 
       function rollback() {
-        console.log(savedCache);
-        const rollbackLabels = savedCache?.labels?.includes(variables.labelId)
-          ? [...savedCache, variables.labelId]
-          : savedCache?.labels?.filter((label) => label !== variables.labelId);
-
-        console.log('roll', rollbackLabels);
-
         queryClient.setQueryData(['issues', issueNumber], {
           ...savedCache,
-          labels: rollbackLabels,
         });
       }
 
@@ -59,11 +51,10 @@ export const IssueLabels = ({ labels, issueNumber }: IssueLabelProps) => {
       return;
     }
 
-    setMenuOpen(!menuOpen);
+    setMenuOpen((prevState) => !prevState);
   }
 
   function handleUpdateIssueLabels(labelId: string) {
-    handleToggleMenu();
     updateIssueLabelsMutation.mutate({
       labels: labels,
       issueNumber: issueNumber,
