@@ -9,7 +9,7 @@ export function Issues() {
   const [labels, setLabels] = useState<ILabel[]>([]);
   const [status, setStatus] = useState('');
 
-  function toggleLabel(label: ILabel) {
+  function toggleLabels(label: ILabel) {
     setLabels((prevState) =>
       prevState.includes(label)
         ? prevState.filter((currentLabel) => currentLabel.id !== label.id)
@@ -24,7 +24,8 @@ export function Issues() {
           <IssuesList selectedLabels={labels} status={status} />
         </section>
         <aside>
-          <LabelList selectedLabels={labels} toggle={toggleLabel} />
+          <LabelList selectedLabels={labels} toggleLabels={toggleLabels} />
+
           <h3>Status</h3>
           <StatusSelect
             value={status}

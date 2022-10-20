@@ -51,7 +51,6 @@ export const IssueAssignment = ({
 
   function toggleMenu() {
     if (!usersQuery.isLoading) {
-      console.log('test');
       setMenuOpen((prevState) => !prevState);
     }
   }
@@ -63,8 +62,6 @@ export const IssueAssignment = ({
       issueNumber: issueNumber,
     });
   }
-
-  console.log(userQuery.data);
 
   return (
     <div className="issue-options">

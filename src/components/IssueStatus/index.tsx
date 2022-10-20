@@ -27,7 +27,6 @@ export const IssueStatus = ({ status, issueNumber }: IssueStatusProps) => {
       return () => rollback();
     },
     onError: (error, variables, rollback) => {
-      console.log('error', error);
       rollback?.();
     },
     onSettled: () => {

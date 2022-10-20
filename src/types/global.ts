@@ -5,6 +5,8 @@ export interface IComment {
   createdDate: string;
 }
 
+interface ILabels {}
+
 export type IComments = Omit<IComment, 'createdDate'> & {
   formattedDate: string;
 };

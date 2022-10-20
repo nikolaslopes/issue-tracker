@@ -1,8 +1,8 @@
-import { useLabelsData } from '../../helpers/useLabelsData'
-import { ILabelList } from './types'
+import { useLabelsData } from '../../helpers/useLabelsData';
+import { LabelListProps } from './types';
 
-export function LabelList({ selectedLabels, toggle }: ILabelList) {
-  const labelsQuery = useLabelsData()
+export function LabelList({ selectedLabels, toggleLabels }: LabelListProps) {
+  const labelsQuery = useLabelsData();
 
   return (
     <div className="labels">
@@ -14,7 +14,7 @@ export function LabelList({ selectedLabels, toggle }: ILabelList) {
           {labelsQuery.data?.map((label) => (
             <li key={label.id}>
               <button
-                onClick={() => toggle(label)}
+                onClick={() => toggleLabels(label)}
                 className={`label ${
                   selectedLabels.includes(label) ? 'selected' : ''
                 } ${label.color}`}
@@ -26,5 +26,5 @@ export function LabelList({ selectedLabels, toggle }: ILabelList) {
         </ul>
       )}
     </div>
-  )
+  );
 }
