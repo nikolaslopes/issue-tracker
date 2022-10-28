@@ -1,7 +1,7 @@
-import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import { useIssueComments } from '../../helpers/useIssueComments';
 import { useIssueData } from '../../helpers/useIssueData';
+import { useScrollToBottomAction } from '../../helpers/useScrollToBottomAction';
 import { IssueAssignment } from '../IssueAssignment';
 import { IssueHeader } from '../IssueHeader';
 import { IssueLabels } from '../IssueLabels';
@@ -14,6 +14,12 @@ export function IssueDetails() {
 
   const issueQuery = useIssueData(number);
   const commentsQuery = useIssueComments(number);
+
+  useScrollToBottomAction({
+    container: document,
+    callback: commentsQuery.fetchNextPage,
+    offset: 100,
+  });
 
   return (
     <div className="issue-details">

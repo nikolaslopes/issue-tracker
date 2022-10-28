@@ -2,7 +2,7 @@ import * as React from 'react';
 
 interface UseScrollToBottomActionProps {
   container: any;
-  callback: () => void;
+  callback: CallableFunction;
   offset: number;
 }
 
