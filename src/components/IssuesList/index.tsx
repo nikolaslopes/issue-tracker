@@ -76,15 +76,44 @@ export function IssuesList({
       </form>
 
       <h2>Issues List {issuesQuery.isFetching ? <Loader /> : null}</h2>
+
       {issuesQuery.isLoading ? (
         <p>Loading...</p>
       ) : searchQuery.fetchStatus === 'idle' &&
         searchQuery.isLoading === true ? (
-        <ul className="issues-list">
-          {issuesQuery.data?.map((issue) => (
-            <IssueItem key={issue.id} issue={issue} />
-          ))}
-        </ul>
+        <>
+          <ul className="issues-list">
+            {issuesQuery.data?.map((issue) => (
+              <IssueItem key={issue.id} issue={issue} />
+            ))}
+          </ul>
+
+          <div className="pagination">
+            <button
+              onClick={() => {
+                if (pageNumber - 1 > 0) {
+                  setPageNumber(pageNumber - 1);
+                }
+              }}
+              disabled={pageNumber === 1}
+            >
+              Previous
+            </button>
+            <p>
+              Page {pageNumber} {issuesQuery.isFetching ? '...' : ''}
+            </p>
+            <button
+              onClick={() => {
+                if (issuesQuery.data?.length !== 0) {
+                  setPageNumber(pageNumber + 1);
+                }
+              }}
+              disabled={issuesQuery.data?.length === 0}
+            >
+              Next
+            </button>
+          </div>
+        </>
       ) : (
         <>
           <h2>Search results:</h2>

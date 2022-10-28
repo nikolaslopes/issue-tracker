@@ -4,7 +4,7 @@ import { LabelListProps } from '../LabelList/types';
 export type IssueListProps = Pick<LabelListProps, 'selectedLabels'> & {
   status: string;
   pageNumber: number;
-  setPageNumber: () => void;
+  setPageNumber: (pageNumber: number) => void;
 };
 export interface IssueItemProps {
   issue: IssueItemFormatted;

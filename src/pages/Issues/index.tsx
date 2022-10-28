@@ -27,7 +27,7 @@ export function Issues() {
             selectedLabels={labels}
             status={status}
             pageNumber={pageNumber}
-            setPageNumber={() => setPageNumber}
+            setPageNumber={setPageNumber}
           />
         </section>
         <aside>
