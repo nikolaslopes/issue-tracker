@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import { useIssueComments } from '../../helpers/useIssueComments';
 import { useIssueData } from '../../helpers/useIssueData';
@@ -26,8 +27,12 @@ export function IssueDetails() {
               {commentsQuery.isLoading ? (
                 <p>loading...</p>
               ) : (
-                commentsQuery.data?.map((comment) => (
-                  <Comment key={comment.id} {...comment} />
+                commentsQuery.data?.pages.map((page, index) => (
+                  <Fragment key={index}>
+                    {page.map((comment) => (
+                      <Comment key={comment.id} {...comment} />
+                    ))}
+                  </Fragment>
                 ))
               )}
             </section>
