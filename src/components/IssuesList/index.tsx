@@ -32,7 +32,10 @@ export function IssuesList({
         statusParam: statusString,
         paginationParam: paginationString,
         signal,
-      })
+      }),
+    {
+      keepPreviousData: true,
+    }
   );
 
   issuesQuery.data?.forEach((issue) => {
@@ -108,7 +111,9 @@ export function IssuesList({
                   setPageNumber(pageNumber + 1);
                 }
               }}
-              disabled={issuesQuery.data?.length === 0}
+              disabled={
+                issuesQuery.data?.length === 0 || issuesQuery.isPreviousData
+              }
             >
               Next
             </button>
