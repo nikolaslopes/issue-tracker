@@ -2,11 +2,17 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { IComment, IComments } from '../types/global';
 import { relativeDate } from './relativeDate';
 
-export async function fetchComments(
-  signal: AbortSignal | undefined,
-  issueNumber: string | undefined,
-  pageParam: number = 1
-) {
+interface FetchCommentsProps {
+  signal: AbortSignal | undefined;
+  issueNumber: string | undefined;
+  pageParam?: number;
+}
+
+export const fetchComments = async ({
+  signal,
+  issueNumber,
+  pageParam = 1,
+}: FetchCommentsProps) => {
   const response = await fetch(
     `/api/issues/${issueNumber}/comments?page=${pageParam}`,
     {
@@ -23,15 +29,15 @@ export async function fetchComments(
   });
 
   return comments;
-}
+};
 
 export const useIssueComments = (issueNumber: string | undefined) => {
   const commentsQuery = useInfiniteQuery(
     ['issues', issueNumber, 'comments'],
-    ({ signal }) => fetchComments(signal, issueNumber),
+    ({ signal }) => fetchComments({ signal, issueNumber }),
     {
+      enabled: issueNumber !== undefined,
       getNextPageParam: (lastPage, pages) => {
-        console.log(lastPage, pages);
         if (lastPage.length === 0) {
           return;
         }

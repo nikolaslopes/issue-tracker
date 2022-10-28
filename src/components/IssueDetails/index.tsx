@@ -6,6 +6,7 @@ import { IssueAssignment } from '../IssueAssignment';
 import { IssueHeader } from '../IssueHeader';
 import { IssueLabels } from '../IssueLabels';
 import { IssueStatus } from '../IssueStatus';
+import { Loader } from '../Loader';
 import { Comment } from './components/Comment';
 
 export function IssueDetails() {
@@ -27,14 +28,13 @@ export function IssueDetails() {
               {commentsQuery.isLoading ? (
                 <p>loading...</p>
               ) : (
-                commentsQuery.data?.pages.map((page, index) => (
-                  <Fragment key={index}>
-                    {page.map((comment) => (
-                      <Comment key={comment.id} {...comment} />
-                    ))}
-                  </Fragment>
-                ))
+                commentsQuery.data?.pages.map((commentsPage) =>
+                  commentsPage.map((comment) => (
+                    <Comment key={comment.id} {...comment} />
+                  ))
+                )
               )}
+              {commentsQuery.isFetchingNextPage && <Loader />}
             </section>
             <aside>
               <IssueStatus
