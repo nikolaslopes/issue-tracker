@@ -2,10 +2,15 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchIssuesList, fetchIssuesSearchResults } from './services';
 import { IssueItem } from './components/IssueItem';
 import { FormEvent, useState } from 'react';
-import { IIssuesList } from './types';
+import { IssueListProps } from './types';
 import { Loader } from '../Loader';
 
-export function IssuesList({ selectedLabels, status }: IIssuesList) {
+export function IssuesList({
+  selectedLabels,
+  status,
+  pageNumber,
+  setPageNumber,
+}: IssueListProps) {
   const [searchValue, setSearchValue] = useState('');
   const queryClient = useQueryClient();
 
@@ -17,12 +22,15 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
 
   const statusString = status ? `&status=${status}` : '';
 
+  const paginationString = pageNumber ? `&page=${pageNumber}` : '';
+
   const issuesQuery = useQuery(
-    ['issues', { selectedLabels, status }],
+    ['issues', { selectedLabels, status, pageNumber }],
     ({ signal }) =>
       fetchIssuesList({
         labelsParam: labelsString,
         statusParam: statusString,
+        paginationParam: paginationString,
         signal,
       })
   );
