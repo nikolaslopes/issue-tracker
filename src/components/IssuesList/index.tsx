@@ -1,4 +1,8 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { fetchIssuesList, fetchIssuesSearchResults } from './services';
 import { IssueItem } from './components/IssueItem';
 import { FormEvent, useState } from 'react';
