@@ -19,7 +19,7 @@ export function IssueItem({ issue }: IssueItemProps) {
           ['issues', String(issue.number)],
           ({ signal }) => fetchIssue(signal, String(issue.number))
         );
-        queryClient.prefetchQuery(
+        queryClient.prefetchInfiniteQuery(
           ['issues', String(issue.number), 'comments'],
           ({ signal }) =>
             fetchComments({ signal, issueNumber: String(issue.number) })
