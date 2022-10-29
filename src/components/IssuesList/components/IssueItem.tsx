@@ -41,7 +41,7 @@ export function IssueItem({ issue }: IssueItemProps) {
           ))}
         </span>
         <small>
-          #{issue.number} opened {issue.formattedDate}{' '}
+          #{issue.number} opened {issue.formattedDate}
           {createdByUser.isSuccess ? `by ${createdByUser.data.name}` : ''}
         </small>
       </div>
