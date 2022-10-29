@@ -1,11 +1,20 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { fetchIssuesList, fetchIssuesSearchResults } from './services';
 import { IssueItem } from './components/IssueItem';
 import { FormEvent, useState } from 'react';
-import { IIssuesList } from './types';
+import { IssueListProps } from './types';
 import { Loader } from '../Loader';
 
-export function IssuesList({ selectedLabels, status }: IIssuesList) {
+export function IssuesList({
+  selectedLabels,
+  status,
+  pageNumber,
+  setPageNumber,
+}: IssueListProps) {
   const [searchValue, setSearchValue] = useState('');
   const queryClient = useQueryClient();
 
@@ -17,14 +26,20 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
 
   const statusString = status ? `&status=${status}` : '';
 
+  const paginationString = pageNumber ? `&page=${pageNumber}` : '';
+
   const issuesQuery = useQuery(
-    ['issues', { selectedLabels, status }],
+    ['issues', { selectedLabels, status, pageNumber }],
     ({ signal }) =>
       fetchIssuesList({
         labelsParam: labelsString,
         statusParam: statusString,
+        paginationParam: paginationString,
         signal,
-      })
+      }),
+    {
+      keepPreviousData: true,
+    }
   );
 
   issuesQuery.data?.forEach((issue) => {
@@ -68,15 +83,46 @@ export function IssuesList({ selectedLabels, status }: IIssuesList) {
       </form>
 
       <h2>Issues List {issuesQuery.isFetching ? <Loader /> : null}</h2>
+
       {issuesQuery.isLoading ? (
         <p>Loading...</p>
       ) : searchQuery.fetchStatus === 'idle' &&
         searchQuery.isLoading === true ? (
-        <ul className="issues-list">
-          {issuesQuery.data?.map((issue) => (
-            <IssueItem key={issue.id} issue={issue} />
-          ))}
-        </ul>
+        <>
+          <ul className="issues-list">
+            {issuesQuery.data?.map((issue) => (
+              <IssueItem key={issue.id} issue={issue} />
+            ))}
+          </ul>
+
+          <div className="pagination">
+            <button
+              onClick={() => {
+                if (pageNumber - 1 > 0) {
+                  setPageNumber(pageNumber - 1);
+                }
+              }}
+              disabled={pageNumber === 1}
+            >
+              Previous
+            </button>
+            <p>
+              Page {pageNumber} {issuesQuery.isFetching ? '...' : ''}
+            </p>
+            <button
+              onClick={() => {
+                if (issuesQuery.data?.length !== 0) {
+                  setPageNumber(pageNumber + 1);
+                }
+              }}
+              disabled={
+                issuesQuery.data?.length === 0 || issuesQuery.isPreviousData
+              }
+            >
+              Next
+            </button>
+          </div>
+        </>
       ) : (
         <>
           <h2>Search results:</h2>

@@ -1,10 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { useIssueComments } from '../../helpers/useIssueComments';
 import { useIssueData } from '../../helpers/useIssueData';
+import { useScrollToBottomAction } from '../../helpers/useScrollToBottomAction';
 import { IssueAssignment } from '../IssueAssignment';
 import { IssueHeader } from '../IssueHeader';
 import { IssueLabels } from '../IssueLabels';
 import { IssueStatus } from '../IssueStatus';
+import { Loader } from '../Loader';
 import { Comment } from './components/Comment';
 
 export function IssueDetails() {
@@ -12,6 +14,12 @@ export function IssueDetails() {
 
   const issueQuery = useIssueData(number);
   const commentsQuery = useIssueComments(number);
+
+  useScrollToBottomAction({
+    container: document,
+    callback: commentsQuery.fetchNextPage,
+    offset: 100,
+  });
 
   return (
     <div className="issue-details">
@@ -26,10 +34,13 @@ export function IssueDetails() {
               {commentsQuery.isLoading ? (
                 <p>loading...</p>
               ) : (
-                commentsQuery.data?.map((comment) => (
-                  <Comment key={comment.id} {...comment} />
-                ))
+                commentsQuery.data?.pages.map((commentsPage) =>
+                  commentsPage.map((comment) => (
+                    <Comment key={comment.id} {...comment} />
+                  ))
+                )
               )}
+              {commentsQuery.isFetchingNextPage && <Loader />}
             </section>
             <aside>
               <IssueStatus

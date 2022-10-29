@@ -43,6 +43,7 @@ export const IssueLabels = ({ labels, issueNumber }: IssueLabelProps) => {
       queryClient.invalidateQueries(['issues', issueNumber], {
         exact: true,
       });
+      queryClient.invalidateQueries(['issues']);
     },
   });
 
